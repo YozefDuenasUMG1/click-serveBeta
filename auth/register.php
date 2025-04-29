@@ -233,9 +233,9 @@ $roles = ['admin', 'mesero', 'cocinero', 'cajero'];
                 
                 <!-- Botones -->
                 <div class="flex flex-col sm:flex-row justify-between items-center mt-6">
-                    <a href="<?= $isAdmin ? 'admin_usuarios.php' : 'login.php' ?>" 
+                    <a href="../login.html" 
                        class="w-full sm:w-auto mb-4 sm:mb-0 text-center bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-all">
-                        <?= $isAdmin ? 'Cancelar' : 'Ya tengo una cuenta' ?>
+                        Cancelar
                     </a>
                     
                     <button 

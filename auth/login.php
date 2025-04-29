@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             exit();
         } else {
             error_log("Error: Contraseña incorrecta para el usuario: " . $usuario);
-            $error = "Credenciales inválidas";
+            $error = "Credenciales incorrectas";
         }
     } else {
         error_log("Error: Usuario no encontrado o inactivo: " . $usuario);
