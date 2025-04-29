@@ -6,63 +6,11 @@
     <title>Menú de Pedido</title>
     <!-- Agregar Bootstrap para estilos -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        #carrito-container {
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 300px;
-            height: 100%;
-            background-color: #f8f9fa;
-            border-left: 1px solid #ddd;
-            padding: 15px;
-            overflow-y: auto;
-            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
-            transform: translateX(100%);
-            transition: transform 0.3s ease-in-out;
-        }
-        #carrito-container.mostrar {
-            transform: translateX(0);
-        }
-        #toggle-carrito {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-        }
-        .menu-category {
-            margin-bottom: 30px;
-            background: white;
-            border-radius: 10px;
-            padding: 15px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .menu-category img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 15px;
-        }
-        .menu-item {
-            margin-bottom: 10px;
-            padding: 10px;
-            border-bottom: 1px solid #eee;
-        }
-        .menu-item:last-child {
-            border-bottom: none;
-        }
-        .menu-item input {
-            margin-right: 10px;
-        }
-        .category-title {
-            color: #d35400;
-            font-weight: bold;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #d35400;
-            padding-bottom: 5px;
-        }
-    </style>
+    <!-- Agregar el enlace al archivo CSS externo -->
+    <link rel="stylesheet" href="./public/carrito.css">
+    <!-- Agregar el enlace al archivo CSS externo para el menú -->
+    <link rel="stylesheet" href="./public/menu.css">
+    
 </head>
 <body class="bg-light">
 <div class="container py-5">
@@ -340,79 +288,8 @@
     <button class="btn btn-primary mt-3 w-100" onclick="enviarPedido()">Enviar Pedido</button>
 </div>
 
-<script>
-let total = 0;
-
-function actualizarCarrito(checkbox) {
-    const carrito = document.getElementById("carrito");
-    const item = document.createElement("li");
-    item.className = "list-group-item";
-
-    const detalle = checkbox.value;
-    item.textContent = `${detalle} - Q${checkbox.dataset.precio}`;
-
-    if (checkbox.checked) {
-        carrito.appendChild(item);
-        total += parseFloat(checkbox.dataset.precio);
-        checkbox.dataset.itemId = item.textContent; // Guardar referencia al texto
-    } else {
-        const items = carrito.querySelectorAll("li");
-        items.forEach(li => {
-            if (li.textContent === checkbox.dataset.itemId) {
-                carrito.removeChild(li);
-            }
-        });
-        total -= parseFloat(checkbox.dataset.precio);
-    }
-
-    document.getElementById("total").textContent = total.toFixed(2);
-}
-
-function enviarPedido() {
-    let mesa = document.getElementById("mesa").value;
-    let seleccionados = document.querySelectorAll("input[type='checkbox']:checked");
-    let pedido = Array.from(seleccionados).map(item => item.value).join(", ");
-    let detalle = document.getElementById("detalle").value;
-
-    if (!mesa || !pedido) {
-        alert("Por favor, completa el número de mesa y selecciona al menos un pedido.");
-        return;
-    }
-
-    fetch("guardar_pedido.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: `mesa=${encodeURIComponent(mesa)}&pedido=${encodeURIComponent(pedido)}&detalle=${encodeURIComponent(detalle)}`
-    })
-    .then(response => response.text())
-    .then(data => {
-        console.log("Respuesta del servidor:", data);
-        if (data.includes("Pedido guardado correctamente")) {
-            alert("Pedido enviado a la cocina!");
-            document.getElementById("mesa").value = "";
-            document.getElementById("detalle").value = "";
-            seleccionados.forEach(item => item.checked = false);
-            document.getElementById("carrito").innerHTML = ""; // Limpiar carrito
-            total = 0;
-            document.getElementById("total").textContent = total.toFixed(2);
-        } else {
-            alert("Error al enviar el pedido.");
-        }
-    })
-    .catch(error => {
-        console.error("Error al enviar el pedido:", error);
-        alert("Hubo un problema al enviar el pedido.");
-    });
-}
-
-// Función para mostrar/ocultar el carrito
-const toggleCarritoButton = document.getElementById("toggle-carrito");
-const carritoContainer = document.getElementById("carrito-container");
-
-toggleCarritoButton.addEventListener("click", () => {
-    carritoContainer.classList.toggle("mostrar");
-});
-</script>
+<script type="module" src="./public/carrito.js"></script>
+<script type="module" src="./src/controllers/obtener_pedidos.js"></script>
 
 <!-- Agregar Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
