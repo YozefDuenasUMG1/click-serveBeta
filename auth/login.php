@@ -29,14 +29,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if (password_verify($password, $usuarioData['password'])) {
             error_log("Inicio de sesión exitoso para el usuario: " . $usuarioData['usuario']);
             $_SESSION['user_id'] = $usuarioData['id'];
-            $_SESSION['usuario'] = $usuarioData['usuario'];
+            $_SESSION['nombre_usuario'] = $usuarioData['usuario'];
             $_SESSION['rol'] = $usuarioData['rol'];
 
-            // Redirige a cliente_panel.html si el rol es cliente
+            // Redirige según el rol
             $redirect = match($usuarioData['rol']) {
-                'admin' => '/new_sitem_pedido/modulos/admin/admin_panel.html',
+                'admin' => '/new_sitem_pedido/modulos/admin/admin_panel.php',
                 'cocinero' => '/new_sitem_pedido/modulos/cocinero/cocinero_panel.html',
-                'cliente' => '/new_sitem_pedido/modulos/cliente/cliente_panel.html',
+                'cliente' => '/new_sitem_pedido/modulos/cliente/index.php',
                 'cajero' => '/new_sitem_pedido/modulos/cajero/cajero_panel.html',
                 default => '/new_sitem_pedido/login.html?error=rol_no_valido'
             };

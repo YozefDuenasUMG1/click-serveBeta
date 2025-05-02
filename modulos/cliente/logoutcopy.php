@@ -28,5 +28,5 @@ session_destroy();
 
 // Redirigir con mensaje opcional (ej: "¡Hasta pronto {usuario}!")
 $mensaje = $usuario ? "?mensaje=Hasta pronto, " . urlencode($usuario) : "";
-header("Location: /new_sitem_pedido/login.html" . $mensaje);
+header("Location: ../../login.html" . $mensaje);
 exit();
