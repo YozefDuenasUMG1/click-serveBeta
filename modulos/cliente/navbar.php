@@ -42,7 +42,8 @@ if (session_status() === PHP_SESSION_NONE) {
                 
                 <li class="nav-item">
                     <button id="toggle-carrito-nav" class="btn btn-secondary position-relative">
-                       <i class="fas fa-shopping-cart"></i>
+                       <i class="fas fa-shopping-cart text-white text-2xl bg-blue-600 p-2 rounded-full shadow-md hover:bg-blue-700 transition duration-300 cursor-pointer"></i>
+
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cart-count">0</span>
                     </button>
                 </li>
