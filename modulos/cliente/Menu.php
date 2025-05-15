@@ -14,15 +14,14 @@ require_once '../../config.php';
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <style>
         body {
-    background: url("https://img.freepik.com/fotos-premium/fondo-rojo-pinceladas-blancas_851755-102.jpg")  no-repeat center center fixed; /* Cambia la URL de la imagen de fondo */
-    background-attachment: fixed; /* Mantiene la imagen fija al hacer scroll */
-    background-size: cover; /* Asegura que la imagen cubra todo el fondo */
-    background-position: center; /* Centra la imagen en el fondo */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;   
-    }
+            background: url("https://img.freepik.com/fotos-premium/fondo-rojo-pinceladas-blancas_851755-102.jpg") no-repeat center center fixed;
+            background-size: cover;
+            background-position: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
         nav.navbar {
-            background-color: #ffe4e1 !important; /* color pastel suave */
+            background-color: #ffe4e1 !important;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
@@ -80,7 +79,7 @@ require_once '../../config.php';
             box-shadow: 0 12px 20px rgba(0,0,0,0.15);
             background: #ffffff;
             height: 250px;
-            margin-bottom: 60px;
+            margin-bottom: 30px;
             position: relative;
         }
 
@@ -100,7 +99,7 @@ require_once '../../config.php';
         }
 
         .categoria-card:hover {
-            transform: scale(1.02);
+            transform: translateY(-5px) scale(1.02);
             box-shadow: 0 16px 30px rgba(0,0,0,0.2);
         }
 
@@ -109,6 +108,7 @@ require_once '../../config.php';
             color: inherit;
             display: flex;
             width: 100%;
+            height: 100%;
         }
 
         .categoria-img {
@@ -240,7 +240,7 @@ require_once '../../config.php';
             ];
 
             foreach ($categorias as $cat) {
-                echo "<div class='col-12'>
+                echo "<div class='col-md-6 col-lg-4'>
                     <div class='categoria-card'>
                         <a href='{$cat[4]}'>
                             <img src='{$cat[1]}' class='categoria-img' alt='{$cat[0]}'>
@@ -257,11 +257,8 @@ require_once '../../config.php';
         </div>
 
         <!-- Botón Regresar -->
-        <div class="card-redirect">
-            <h4>¿Terminaste tu pedido?</h4>
-            <button class="btn-animado" onclick="window.location.href='index.php'">
-                Regresar al Inicio
-            </button>
+        <div class="text-center mt-5">
+            <a href="index.php" class="btn btn-danger btn-lg">Regresar al Inicio</a>
         </div>
     </div>
 </body>

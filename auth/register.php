@@ -121,138 +121,120 @@ $roles = ['admin', 'mesero', 'cocinero', 'cajero'];
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#E6B800',
-                        dark: '#161616',
-                        background: '#2A2D34',
-                    },
-                    fontFamily: {
-                        display: ['Playfair Display', 'serif'],
-                        sans: ['Lato', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
+     <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2563EB',  // Azul neutro (blue-600)
+            primaryLight: '#3B82F6', // Azul claro (blue-500)
+            primaryDark: '#1E40AF',  // Azul oscuro (blue-800)
+            background: '#F3F4F6', // Gris claro para fondo (gray-100)
+          },
+          fontFamily: {
+            display: ['Playfair Display', 'serif'],
+            sans: ['Lato', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
 </head>
-<body class="bg-background font-sans min-h-screen flex items-center justify-center p-4">
-    <div class="w-full max-w-2xl">
-        <div class="bg-dark border border-primary rounded-lg shadow-xl shadow-primary/20 p-8">
-            <!-- Logo y Título -->
-            <div class="text-center mb-8">
-                <h1 class="text-primary text-3xl font-bold font-display">RestaurantTech</h1>
-                <?php if ($isInitialSetup): ?>
-                    <p class="text-white mt-2 text-lg">Configuración Inicial - Crear Administrador</p>
-                <?php else: ?>
-                    <p class="text-white mt-2 text-lg">Registro de Nuevo Usuario</p>
-                <?php endif; ?>
+
+<body class="bg-background font-sans min-h-screen flex items-center justify-center p-6">
+  <div class="w-full max-w-2xl">
+    <div class="bg-white border border-blue-200 rounded-2xl shadow-xl p-10">
+      <!-- Título -->
+      <div class="text-center mb-10">
+        <h1 class="text-5xl font-display font-bold text-primaryDark drop-shadow-sm">🍽️ Click&serve</h1>
+        <p class="text-blue-600 mt-2 text-lg"><?= $isInitialSetup ? 'Configuración Inicial - Crear Administrador' : 'Registro de Nuevo Usuario' ?></p>
+      </div>
+
+      <!-- Mensajes de error y éxito (igual) -->
+
+      <!-- Formulario -->
+      <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" id="registroForm" novalidate>
+        <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <!-- Usuario -->
+          <div>
+            <label for="usuario" class="block text-blue-700 text-lg font-semibold mb-3">Usuario</label>
+            <div class="relative">
+              <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-blue-300">
+                <!-- Icono -->
+                <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M5.121 17.804A13.937 13.937 0 0112 15c2.21 0 4.29.534 6.121 1.474M15 11a3 3 0 10-6 0 3 3 0 006 0z" />
+                </svg>
+              </span>
+              <input type="text" name="usuario" id="usuario" required
+                value="<?= htmlspecialchars($usuario) ?>"
+                class="w-full pl-14 pr-5 py-4 text-lg border border-blue-300 rounded-lg focus:outline-none focus:ring-3 focus:ring-primaryLight transition" />
             </div>
-            
-            <!-- Mensaje de Error o Éxito -->
-            <?php if (!empty($error)): ?>
-                <div class="bg-red-900/20 border border-red-500/30 text-red-400 px-4 py-3 rounded mb-6 text-center text-sm">
-                    <?= htmlspecialchars($error) ?>
-                </div>
-            <?php endif; ?>
-            
-            <?php if (!empty($success)): ?>
-                <div class="bg-green-900/20 border border-green-500/30 text-green-400 px-4 py-3 rounded mb-6 text-center text-sm">
-                    <?= htmlspecialchars($success) ?>
-                    <?php if (!$isAdmin): ?>
-                        <div class="mt-2">
-                            <a href="login.php" class="text-primary hover:underline">Ir a Iniciar Sesión</a>
-                        </div>
-                    <?php endif; ?>
-                </div>
-            <?php endif; ?>
-            
-            <!-- Formulario -->
-            <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" id="registroForm">
-                <!-- Token CSRF -->
-                <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <!-- Usuario -->
-                    <div class="mb-4">
-                        <label for="usuario" class="block text-gray-400 text-sm font-bold mb-2">Usuario</label>
-                        <div class="relative border border-gray-700 rounded-lg focus-within:border-primary transition-all">
-                            <input 
-                                class="w-full bg-transparent text-white px-4 py-3 rounded-lg focus:outline-none"
-                                type="text" 
-                                name="usuario" 
-                                id="usuario" 
-                                value="<?= htmlspecialchars($usuario) ?>"
-                                required
-                            >
-                        </div>
-                    </div>
-                    <!-- Contraseña -->
-                    <div class="mb-4">
-                        <label for="password" class="block text-gray-400 text-sm font-bold mb-2">Contraseña</label>
-                        <div class="relative border border-gray-700 rounded-lg focus-within:border-primary transition-all">
-                            <input 
-                                class="w-full bg-transparent text-white px-4 py-3 rounded-lg focus:outline-none"
-                                type="password" 
-                                name="password" 
-                                id="password" 
-                                required
-                            >
-                        </div>
-                        <p class="text-gray-500 text-xs mt-1">Mínimo 8 caracteres</p>
-                    </div>
-                    <!-- Confirmar Contraseña -->
-                    <div class="mb-4">
-                        <label for="confirmar_password" class="block text-gray-400 text-sm font-bold mb-2">Confirmar Contraseña</label>
-                        <div class="relative border border-gray-700 rounded-lg focus-within:border-primary transition-all">
-                            <input 
-                                class="w-full bg-transparent text-white px-4 py-3 rounded-lg focus:outline-none"
-                                type="password" 
-                                name="confirmar_password" 
-                                id="confirmar_password" 
-                                required
-                            >
-                        </div>
-                    </div>
-                    <!-- Campo de rol no modificable -->
-                    <div class="mb-4">
-                        <label for="rol" class="block text-gray-400 text-sm font-bold mb-2">Rol</label>
-                        <input 
-                            class="w-full bg-gray-700 text-white px-4 py-3 rounded-lg focus:outline-none cursor-not-allowed"
-                            type="text" 
-                            id="rol" 
-                            value="Cliente" 
-                            disabled
-                        >
-                        <input type="hidden" name="rol" value="cliente">
-                    </div>
-                </div>
-                
-                <!-- Botones -->
-                <div class="flex flex-col sm:flex-row justify-between items-center mt-6">
-                    <a href="../login.html" 
-                       class="w-full sm:w-auto mb-4 sm:mb-0 text-center bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-all">
-                        Cancelar
-                    </a>
-                    
-                    <button 
-                        type="submit" 
-                        class="w-full sm:w-auto bg-primary hover:bg-primary/90 text-dark font-bold py-3 px-6 rounded-lg transition-all transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-primary/50"
-                    >
-                        <?= $isInitialSetup ? 'Crear Cuenta de Administrador' : 'Registrar Usuario' ?>
-                    </button>
-                </div>
-            </form>
+          </div>
+
+          <!-- Contraseña -->
+          <div>
+            <label for="password" class="block text-blue-700 text-lg font-semibold mb-3">Contraseña</label>
+            <div class="relative">
+              <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-blue-300">
+                <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 11c0-1.657-1.343-3-3-3s-3 1.343-3 3m12 0c0-1.657-1.343-3-3-3s-3 1.343-3 3m0 4v4" />
+                </svg>
+              </span>
+              <input type="password" name="password" id="password" required
+                class="w-full pl-14 pr-5 py-4 text-lg border border-blue-300 rounded-lg focus:outline-none focus:ring-3 focus:ring-primaryLight transition" />
+            </div>
+            <p class="text-blue-400 mt-1 text-sm">Mínimo 8 caracteres</p>
+          </div>
+
+          <!-- Confirmar contraseña -->
+          <div>
+            <label for="confirmar_password" class="block text-blue-700 text-lg font-semibold mb-3">Confirmar Contraseña</label>
+            <div class="relative">
+              <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-blue-300">
+                <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 11c0-1.657-1.343-3-3-3s-3 1.343-3 3m12 0c0-1.657-1.343-3-3-3s-3 1.343-3 3m0 4v4" />
+                </svg>
+              </span>
+              <input type="password" name="confirmar_password" id="confirmar_password" required
+                class="w-full pl-14 pr-5 py-4 text-lg border border-blue-300 rounded-lg focus:outline-none focus:ring-3 focus:ring-primaryLight transition" />
+            </div>
+          </div>
+
+          <!-- Rol (oculto) -->
+          <div>
+            <label class="block text-blue-700 text-lg font-semibold mb-3">Rol</label>
+            <input type="text" disabled value="Cliente"
+              class="w-full px-5 py-4 bg-blue-50 border border-blue-200 text-blue-400 rounded-lg cursor-not-allowed text-lg" />
+            <input type="hidden" name="rol" value="cliente" />
+          </div>
         </div>
-        
-        <!-- Footer -->
-        <div class="text-center mt-4 text-gray-400 text-sm">
-            &copy; <?= date('Y') ?> RestaurantTech - Todos los derechos reservados
+
+        <!-- Botones -->
+        <div class="flex flex-col sm:flex-row justify-between items-center mt-10 gap-6">
+          <a href="../login.html"
+            class="w-full sm:w-auto text-center bg-blue-100 hover:bg-blue-200 text-blue-700 font-semibold py-4 px-10 rounded-lg transition text-lg">
+            Cancelar
+          </a>
+
+          <button type="submit"
+            class="w-full sm:w-auto bg-primary hover:bg-primaryDark text-white font-semibold py-4 px-10 rounded-lg transition transform active:scale-95 text-lg">
+            <?= $isInitialSetup ? 'Crear Administrador' : 'Registrar Usuario' ?>
+          </button>
         </div>
+      </form>
     </div>
+
+    <!-- Footer -->
+    <div class="text-center mt-6 text-blue-400 text-sm">
+      &copy; <?= date('Y') ?> RestaurantTech
+    </div>
+  </div>
     
     <!-- Scripts -->
     <script>

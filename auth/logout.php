@@ -7,7 +7,7 @@ $usuario = $_SESSION['usuario'] ?? null;
 
 // Destruir completamente la sesión
 session_unset();  // Limpia todas las variables de sesión
-$_SESSION = [];   // Doble seguridad (redundante pero útil)
+$_SESSION = [];   // Doble seguridad
 
 // Eliminar cookie de sesión
 if (ini_get("session.use_cookies")) {
@@ -26,7 +26,7 @@ if (ini_get("session.use_cookies")) {
 // Destruir la sesión
 session_destroy();
 
-// Redirigir con mensaje opcional (ej: "¡Hasta pronto {usuario}!")
+// Redirigir con mensaje opcional
 $mensaje = $usuario ? "?mensaje=Hasta pronto, " . urlencode($usuario) : "";
-header("Location: /new_sitem_pedido/login.html" . $mensaje);
+header("Location: ../../login.html" . $mensaje);
 exit();

@@ -31,7 +31,7 @@ if (session_status() === PHP_SESSION_NONE) {
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                             <li><a class="dropdown-item" href="pedidos.php">Mis Pedidos</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item text-danger" href="../../auth/logout.php">Cerrar Sesión</a></li>
+                            <a class="dropdown-item text-danger" href="/click/modulos/cliente/logoutcopy.php">Cerrar Sesión</a>
                         </ul>
                     </li>
                 <?php else: ?>
