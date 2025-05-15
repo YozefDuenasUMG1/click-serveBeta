@@ -12,215 +12,158 @@ require_once '../../config.php';
     <link rel="stylesheet" href="styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <style>
-        body {
-            background: url("https://img.freepik.com/fotos-premium/fondo-rojo-pinceladas-blancas_851755-102.jpg") no-repeat center center fixed;
-            background-size: cover;
-            background-position: center;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+   <style>
+    body {
+    background: #faf7f5;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #4a4a4a;
+    margin: 0;
+    padding: 0;
+}
 
-        nav.navbar {
-            background-color: #ffe4e1 !important;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
+.container-menu {
+    padding: 100px 15px 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
 
-        nav.navbar .navbar-brand, nav.navbar .nav-link {
-            color: #c62828 !important;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
+.titulo-menu {
+    text-align: center;
+    margin-bottom: 60px;
+    font-size: 3rem;
+    font-weight: 700;
+    color: #a98ca0; /* pastel lavanda */
+    border-bottom: 3px solid #c8b5d9;
+    padding-bottom: 12px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
 
-        nav.navbar .nav-link:hover {
-            color: #f44336 !important;
-        }
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    justify-content: center;
+}
 
-        .btn-carrito {
-            background-color: #ffebeb;
-            border: 2px solid #ff0000;
-            border-radius: 50px;
-            padding: 0.5rem 1.2rem;
-            color: #ff0000;
-            font-weight: bold;
-            transition: all 0.4s ease;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
+.col-md-6, .col-lg-4 {
+    flex: 1 1 30%;
+    max-width: 30%;
+    box-sizing: border-box;
+}
 
-        .btn-carrito:hover {
-            background-color: #ff0000;
-            color: white;
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
-            transform: scale(1.1) rotate(-2deg);
-        }
+.categoria-card {
+    background: #fff;
+    border-radius: 25px;
+    box-shadow: 0 12px 30px rgba(169, 140, 160, 0.15);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 430px;
+}
 
-        .container-menu {
-            padding-top: 80px;
-            padding-bottom: 40px;
-        }
+.categoria-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 18px 40px rgba(169, 140, 160, 0.3);
+}
 
-        .titulo-menu {
-            text-align: center;
-            margin: 40px auto;
-            color: #d32f2f;
-            font-weight: bold;
-            text-transform: uppercase;
-            border-bottom: 3px solid #d32f2f;
-            padding-bottom: 10px;
-            max-width: 600px;
-            font-size: 2.2rem;
-        }
+.categoria-card a {
+    color: inherit;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
 
-        .categoria-card {
-            display: flex;
-            flex-direction: row;
-            transition: all 0.4s ease;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 12px 20px rgba(0,0,0,0.15);
-            background: #ffffff;
-            height: 250px;
-            margin-bottom: 30px;
-            position: relative;
-        }
+.categoria-img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    border-bottom: 2px solid #e4dff2;
+}
 
-        .categoria-card::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background-color: transparent;
-            transition: background-color 0.3s ease;
-        }
+.categoria-body {
+    padding: 30px 25px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
 
-        .categoria-card:hover::after {
-            background-color: rgba(255, 0, 0, 0.3);
-        }
+.categoria-title {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: #b39bc8; /* lavanda oscuro */
+    margin-bottom: 0.5rem;
+}
 
-        .categoria-card:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 16px 30px rgba(0,0,0,0.2);
-        }
+.categoria-subtitle {
+    font-size: 1.1rem;
+    color: #9783ac;
+    font-style: italic;
+    margin-bottom: 1rem;
+}
 
-        .categoria-card a {
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            width: 100%;
-            height: 100%;
-        }
+.categoria-desc {
+    font-size: 1rem;
+    color: #6d6470;
+    line-height: 1.4;
+    flex-grow: 1;
+}
 
-        .categoria-img {
-            width: 40%;
-            height: 100%;
-            object-fit: cover;
-        }
+.btn-elegante {
+    background: #b39bc8;
+    color: white;
+    border-radius: 50px;
+    padding: 12px 28px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border: none;
+    box-shadow: 0 5px 20px rgba(179, 155, 200, 0.3);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+    align-self: center;
+    margin-top: 30px;
+    display: inline-block;
+}
 
-        .categoria-body {
-            padding: 25px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            width: 60%;
-        }
+.btn-elegante:hover {
+    background: #9a84b8;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(154, 132, 184, 0.5);
+}
 
-        .categoria-title {
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-            color: #d32f2f;
-            font-weight: bold;
-        }
+@media (max-width: 991px) {
+    .col-md-6, .col-lg-4 {
+        max-width: 45%;
+        flex: 1 1 45%;
+    }
+}
 
-        .categoria-subtitle {
-            font-weight: 600;
-            color: #444;
-            margin-bottom: 10px;
-        }
+@media (max-width: 576px) {
+    .col-md-6, .col-lg-4 {
+        max-width: 100%;
+        flex: 1 1 100%;
+    }
 
-        .categoria-desc {
-            color: #555;
-            font-size: 1rem;
-        }
+    .titulo-menu {
+        font-size: 2.4rem;
+        max-width: 100%;
+    }
 
-        .card-redirect {
-            background: linear-gradient(145deg, #fff, #f0f0f0);
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
-            text-align: center;
-            max-width: 400px;
-            margin: 60px auto;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
+    .categoria-img {
+        height: 180px;
+    }
 
-        .card-redirect:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 18px 35px rgba(0,0,0,0.2);
-        }
+    .categoria-card {
+        height: auto;
+    }
+}
 
-        .card-redirect h4 {
-            font-weight: bold;
-            margin-bottom: 1.5rem;
-            color: #d32f2f;
-        }
+</style>
 
-        .btn-animado {
-            background: #d32f2f;
-            color: #fff;
-            padding: 0.9rem 2rem;
-            font-size: 1.1rem;
-            border-radius: 50px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-animado::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: rgba(255,255,255,0.2);
-            transition: left 0.5s;
-        }
-
-        .btn-animado:hover::after {
-            left: 100%;
-        }
-
-        .btn-animado:hover {
-            background: #b71c1c;
-        }
-
-        @media (max-width: 768px) {
-            .categoria-card {
-                flex-direction: column;
-                height: auto;
-            }
-
-            .categoria-img {
-                width: 100%;
-                height: 200px;
-            }
-
-            .categoria-body {
-                width: 100%;
-            }
-
-            .categoria-title {
-                font-size: 1.5rem;
-            }
-
-            .titulo-menu {
-                font-size: 1.8rem;
-            }
-        }
-    </style>
 </head>
 <body>
     <?php include 'navbar.php'; ?>
@@ -257,9 +200,9 @@ require_once '../../config.php';
         </div>
 
         <!-- Botón Regresar -->
-        <div class="text-center mt-5">
-            <a href="index.php" class="btn btn-danger btn-lg">Regresar al Inicio</a>
+       <div class="text-center mt-5">
+        <a href="index.php" class="btn-elegante">Regresar al Inicio</a>
         </div>
-    </div>
+
 </body>
 </html>

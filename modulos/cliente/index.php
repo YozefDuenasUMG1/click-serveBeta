@@ -250,6 +250,65 @@ $productos = $productos->fetchAll(PDO::FETCH_ASSOC);
       min-width: 200px;
       border-radius: 8px;
     }
+   
+    h3.mt-4.text-danger {
+  font-size: 65px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #ff758f; /* Rosa pastel */
+  text-align: center;
+  font-weight: 900;
+  margin-bottom: 40px;
+  text-shadow: 1px 1px 4px rgba(255, 117, 143, 0.6);
+}
+
+
+  .position-relative.rounded-4 {
+  background: #fff0f6; /* Rosa pastel muy suave */
+  border-radius: 1.5rem !important;
+  box-shadow: 0 8px 20px rgba(255, 117, 143, 0.15);
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  border: none;
+}
+
+  .position-relative.rounded-4:hover {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 20px 40px rgba(255, 117, 143, 0.35);
+}
+
+
+.position-relative.rounded-4 img {
+  border-top-left-radius: 1.5rem;
+  border-top-right-radius: 1.5rem;
+  transition: transform 0.5s ease;
+}
+
+.position-relative.rounded-4:hover img {
+  transform: scale(1.1);
+  filter: brightness(1.1);
+}
+
+
+.position-absolute.bottom-0.w-100.text-white.text-center.p-2 {
+  background: linear-gradient(180deg, transparent 0%, rgba(255, 117, 143, 0.9) 90%);
+  font-size: 1.6rem;
+  font-weight: 700;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #fff;
+  letter-spacing: 0.06em;
+  user-select: none;
+}
+
+@media (max-width: 768px) {
+  h3.mt-4.text-danger {
+    font-size: 45px;
+  }
+  .position-absolute.bottom-0.w-100.text-white.text-center.p-2 {
+    font-size: 1.1rem;
+  }
+}
+
 
 
     </style>
@@ -309,6 +368,16 @@ $productos = $productos->fetchAll(PDO::FETCH_ASSOC);
       <img src="https://img.freepik.com/foto-gratis/primer-plano-cristaleria-brillante-pie-detras-placa-cena_8353-664.jpg" alt="Guests" />
         </div>
   </section>
+  
+
+   <section style="margin-top:100px;">
+        <div class="dining-gallery">
+      <img src="https://media.istockphoto.com/id/1411971240/es/foto/copa-de-vino-y-champain-en-bodas-y-eventos-de-lujo.jpg?s=612x612&w=0&k=20&c=u_hEm_WfnmQtfl9SCsaJ8zNI0BXpj_hCOSt-pd6ezFU=" alt="Dining Room" />
+      <img src="https://i0.wp.com/foodandpleasure.com/wp-content/uploads/2022/08/restaurantes-de-lujo-bajel-sofitel.jpg?fit=1280%2C868&ssl=1" alt="Dish" />
+      <img src="https://animalgourmet.com/wp-content/uploads/2018/01/jay-wennington-2065-1-e1516220610269.jpg" alt="Guests" />
+        </div>
+  </section>
+
     </section>
 
     <!-- Contenido principal -->
