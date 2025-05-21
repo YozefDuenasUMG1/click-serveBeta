@@ -2,32 +2,34 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Definir constantes para la conexión a la base de datos
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root');
-define('DB_PASSWORD', ''); // Contraseña vacía cuando no hay contraseña
+define('DB_PASSWORD', '');
 define('DB_NAME', 'pedidos');
 
-// Establecer conexión mysqli
-$conexion = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-
-if ($conexion->connect_error) {
-    die("Error de conexión: " . $conexion->connect_error);
-}
-
-$conexion->set_charset("utf8");
-$conn = $conexion;
-
-// Establecer conexión PDO
 try {
     $pdo = new PDO(
-        "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME,
+        "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8",
         DB_USER,
         DB_PASSWORD,
-        array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8")
+        [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
+        ]
     );
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch(PDOException $e) {
-    die("Error de conexión: " . $e->getMessage());
+} catch (PDOException $e) {
+    die("Error de conexión PDO: " . $e->getMessage());
+}
+
+try {
+    $conexion = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+    if ($conexion->connect_error) {
+        throw new Exception("Error de conexión MySQLi: " . $conexion->connect_error);
+    }
+    $conexion->set_charset("utf8");
+    $conn = $conexion;
+} catch (Exception $e) {
+    die($e->getMessage());
 }
 ?>

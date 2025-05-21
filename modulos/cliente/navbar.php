@@ -31,7 +31,7 @@ if (session_status() === PHP_SESSION_NONE) {
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                             <li><a class="dropdown-item" href="pedidos.php">Mis Pedidos</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item text-danger" href="../../auth/logout.php">Cerrar Sesión</a></li>
+                            <a class="dropdown-item text-danger" href="/click/modulos/cliente/logoutcopy.php">Cerrar Sesión</a>
                         </ul>
                     </li>
                 <?php else: ?>
@@ -42,7 +42,8 @@ if (session_status() === PHP_SESSION_NONE) {
                 
                 <li class="nav-item">
                     <button id="toggle-carrito-nav" class="btn btn-secondary position-relative">
-                        Carrito
+                       <i class="fas fa-shopping-cart text-white text-2xl bg-blue-600 p-2 rounded-full shadow-md hover:bg-blue-700 transition duration-300 cursor-pointer"></i>
+
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cart-count">0</span>
                     </button>
                 </li>
@@ -108,85 +109,159 @@ if (session_status() === PHP_SESSION_NONE) {
         </div>
     </div>
 </div>
+<
 
-<!-- Estilos -->
 <style>
-    /* Navbar */
-    .navbar {
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    
-    /* User dropdown */
-    #userDropdown {
-        max-width: 200px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-    
+   /* Fuente estilizada */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap');
+
+.navbar {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: black;
+    padding: 0.8rem 1rem;
+    font-family: 'Poppins', sans-serif;
+}
+
+.nav-link {
+    font-weight: 600;
+    font-size: 19px;
+    letter-spacing: 0.5px;
+    color: #333;
+    transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+    color: #003d80;
+}
+
+/* Estilo para el nombre del cliente en el dropdown o navbar */
+#userDropdown {
+    font-weight: 600;
+    font-size: 19px;
+    color: #2b2b2b;
+    font-family: 'Poppins', sans-serif;
+}
+
+
     .dropdown-menu {
-        min-width: 200px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
-    
+
     /* Carrito */
     #carrito-container {
         position: fixed;
         top: 0;
-        right: -400px;
+        right: -420px;
         width: 400px;
         height: 100vh;
-        background: white;
-        box-shadow: -2px 0 5px rgba(0,0,0,0.1);
-        transition: right 0.3s ease;
-        z-index: 1000;
-        padding: 20px;
+        background: #fff;
+        box-shadow: -4px 0 12px rgba(0, 0, 0, 0.15);
+        transition: right 0.3s ease-in-out;
+        z-index: 1050;
+        padding: 25px;
         overflow-y: auto;
+        border-top-left-radius: 12px;
+        border-bottom-left-radius: 12px;
     }
-    
+
     #carrito-container.mostrar {
         right: 0;
     }
-    
+
     .overlay {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0,0,0,0.5);
-        z-index: 999;
+        background: rgba(0,0,0,0.4);
+        z-index: 1040;
         display: none;
     }
-    
+
+    .cart-item {
+        background-color: #f9f9f9;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        border-left: 4px solid #007bff;
+    }
+
+    .cart-item-header {
+        font-weight: 600;
+        font-size: 16px;
+    }
+
+    .cart-item-details {
+        font-size: 13px;
+        color: #555;
+        margin-top: 5px;
+    }
+
+    .cart-total-section {
+        border-top: 2px dashed #ccc;
+        margin-top: 20px;
+        padding-top: 15px;
+    }
+
+    /* Botones */
+    .btn-close {
+        background-color: #f0f0f0;
+        border-radius: 50%;
+        padding: 0.5rem;
+    }
+
+    .btn {
+        border-radius: 8px;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border: none;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border: none;
+    }
+
+    .btn-outline-secondary {
+        border-radius: 6px;
+    }
+
+    /* Select y textarea */
+    .form-select, .form-control {
+        border-radius: 8px;
+        border: 1px solid #ccc;
+    }
+
+    /* Modal */
+    .modal-content {
+        border-radius: 12px;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Responsive */
     @media (max-width: 768px) {
         #carrito-container {
             width: 100%;
             right: -100%;
+            border-radius: 0;
         }
     }
-    
-    .cart-item {
-        border-bottom: 1px solid #eee;
-        padding-bottom: 10px;
-        margin-bottom: 10px;
-    }
-    
-    .cart-item-header {
-        font-weight: bold;
-    }
-    
-    .cart-item-details {
-        font-size: 13px;
-        color: #666;
-        margin-bottom: 5px;
-    }
-    
-    .cart-total-section {
-        border-top: 2px solid #eee;
-        margin-top: 15px;
-        padding-top: 15px;
-    }
 </style>
+
 
 <!-- Scripts del Carrito -->
 <script>

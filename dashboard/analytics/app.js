@@ -1,10 +1,9 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Inicialización
+document.addEventListener('DOMContentLoaded', function () {
     const fechaInput = document.getElementById('selector-fecha');
     const hoy = new Date().toISOString().split('T')[0];
     fechaInput.value = hoy;
     fechaInput.max = hoy;
-    
+
     mostrarFechaActual(hoy);
     cargarPedidos(hoy);
 });
@@ -13,12 +12,11 @@ function mostrarFechaActual(fecha) {
     const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     const fechaObj = new Date(fecha);
     const fechaFormateada = fechaObj.toLocaleDateString('es-ES', opciones);
-    
+
     document.getElementById('fecha-actual').textContent = fechaFormateada;
     document.getElementById('fecha-consulta').textContent = `Mostrando pedidos del ${fechaFormateada}`;
 }
 
-// Función para mostrar errores
 function mostrarError(mensaje) {
     const container = document.getElementById('pedidos-container');
     container.innerHTML = `
@@ -30,21 +28,18 @@ function mostrarError(mensaje) {
     console.error(mensaje);
 }
 
-// Validar que los elementos existen antes de acceder a sus propiedades
 function cargarPedidos(fecha) {
     const mesaInput = document.getElementById('filtro-mesa');
     const fechaInput = document.getElementById('selector-fecha');
 
     if (!mesaInput || !fechaInput) {
-        console.error('Elementos necesarios no encontrados en el DOM');
         mostrarError('Error interno: No se encontraron los elementos de filtro.');
         return;
     }
 
     const mesa = mesaInput.value;
-    const estado = 'todos'; // Estado fijo ya que se eliminó el filtro por estado
+    const estado = 'todos';
 
-    // Mostrar carga
     const container = document.getElementById('pedidos-container');
     container.innerHTML = `
         <div class="text-center my-5">
@@ -55,26 +50,26 @@ function cargarPedidos(fecha) {
         </div>
     `;
 
-    // Usar URL absoluta para evitar problemas de ruta
     const url = new URL('registro_pedidos.php', window.location.href);
     url.searchParams.append('fecha', fecha);
     if (mesa) url.searchParams.append('mesa', mesa);
-    url.searchParams.append('_', Date.now()); // Evitar caché
+    url.searchParams.append('_', Date.now()); // Evita caché
 
     fetch(url)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+        .then(async response => {
+            const text = await response.text(); // Leer como texto primero
+            try {
+                return JSON.parse(text);
+            } catch (err) {
+                console.error('Respuesta no es JSON válido:', text);
+                throw new Error('La respuesta del servidor no es JSON válido.');
             }
-            return response.json().catch(() => {
-                throw new Error('La respuesta no es JSON válido');
-            });
         })
         .then(data => {
             if (!data || typeof data !== 'object') {
                 throw new Error('Respuesta inválida del servidor');
             }
-            
+
             if (data.success) {
                 mostrarPedidos(data.pedidos);
                 mostrarResumen(data);
@@ -97,7 +92,7 @@ function mostrarResumen(data) {
 function mostrarPedidos(pedidos) {
     const container = document.getElementById('pedidos-container');
     container.innerHTML = '';
-    
+
     if (!pedidos || pedidos.length === 0) {
         container.innerHTML = `
             <div class="alert alert-warning">
@@ -106,20 +101,16 @@ function mostrarPedidos(pedidos) {
         `;
         return;
     }
-    
+
     pedidos.forEach(pedido => {
         const card = document.createElement('div');
         card.className = `card mb-4 estado-${pedido.estado.toLowerCase()}`;
         card.style.borderLeft = `4px solid ${getEstadoColor(pedido.estado)}`;
-        
-        // Procesar items
+
         const itemsHtml = procesarItemsPedido(pedido);
-        
-        // Formatear fechas
+
         const fechaPedido = new Date(pedido.fecha_hora_pedido);
         const fechaRegistro = new Date(pedido.fecha_hora_registro);
-        
-        // Asegurar que el total sea numérico antes de usar toFixed
         const total = parseFloat(pedido.total) || 0;
 
         card.innerHTML = `
@@ -129,7 +120,7 @@ function mostrarPedidos(pedidos) {
                         <h5 class="card-title">Mesa ${pedido.mesa}</h5>
                         <div class="text-muted small mb-2">
                             <i class="bi bi-calendar"></i> ${fechaPedido.toLocaleDateString('es-ES')}
-                            <i class="bi bi-clock ms-2"></i> ${fechaPedido.toLocaleTimeString('es-ES', {hour: '2-digit', minute:'2-digit'})}
+                            <i class="bi bi-clock ms-2"></i> ${fechaPedido.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}
                         </div>
                     </div>
                     <div>
@@ -138,20 +129,20 @@ function mostrarPedidos(pedidos) {
                         </span>
                     </div>
                 </div>
-                
+
                 <hr>
-                
+
                 <div class="mb-3">
                     <h6 class="text-primary">Detalles del Pedido</h6>
                     ${itemsHtml}
                 </div>
-                
+
                 ${pedido.detalle ? `
                 <div class="alert alert-light border mb-3">
                     <strong>Notas:</strong> ${pedido.detalle}
                 </div>
                 ` : ''}
-                
+
                 <div class="d-flex justify-content-between align-items-center">
                     <small class="text-muted">
                         <i class="bi bi-clock-history"></i> Registrado: ${fechaRegistro.toLocaleString('es-ES')}
@@ -162,7 +153,7 @@ function mostrarPedidos(pedidos) {
                 </div>
             </div>
         `;
-        
+
         container.appendChild(card);
     });
 }
@@ -173,7 +164,7 @@ function procesarItemsPedido(pedido) {
             <p class="mb-0">${pedido.pedido || 'No hay detalles específicos del pedido'}</p>
         </div>`;
     }
-    
+
     try {
         const items = JSON.parse(pedido.items_json);
         if (!Array.isArray(items)) {
@@ -181,7 +172,7 @@ function procesarItemsPedido(pedido) {
                 <p class="mb-0">${pedido.pedido}</p>
             </div>`;
         }
-        
+
         return `<ul class="list-group">${items.map(item => `
             <li class="list-group-item">
                 <div class="d-flex justify-content-between">
@@ -204,30 +195,27 @@ function procesarItemsPedido(pedido) {
 }
 
 function getEstadoColor(estado) {
-    const estados = {
-        pendiente: '#198754', // Cambiar a verde
+    const colores = {
+        pendiente: '#198754',
         completado: '#198754',
         cancelado: '#dc3545',
         default: '#6c757d'
     };
-    return estados[estado.toLowerCase()] || estados.default;
+    return colores[estado.toLowerCase()] || colores.default;
 }
 
 function getBadgeClass(estado) {
-    const estados = {
-        pendiente: 'bg-success', // Cambiar a verde
+    const clases = {
+        pendiente: 'bg-success',
         completado: 'bg-success',
         cancelado: 'bg-danger',
         default: 'bg-secondary'
     };
-    return estados[estado.toLowerCase()] || estados.default;
+    return clases[estado.toLowerCase()] || clases.default;
 }
 
-// Función para filtrar pedidos
 function filtrarPedidos() {
     const fechaInput = document.getElementById('selector-fecha');
     const fecha = fechaInput ? fechaInput.value : new Date().toISOString().split('T')[0];
     cargarPedidos(fecha);
 }
-
-// Resto de funciones (filtrarPedidos, actualizarPedidos, mostrarError) se mantienen igual

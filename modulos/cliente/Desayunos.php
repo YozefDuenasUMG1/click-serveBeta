@@ -38,41 +38,243 @@ $productos = $productos->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
     <link rel="stylesheet" href="styles.css">
     <style>
-        .menu-item {
+        body {
+    background-color: #ffffff;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    color: #4a4a4a;
+    font-weight: bold;
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+p {
+    color: #6c757d;
+    font-size: 1.1em;
+    text-align: center;
+}
+
+.menu-item {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 15px;
+}
+
+.menu-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.menu-item img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.menu-item div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.menu-category {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.banner-container {
+    margin-top: 40px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.owl-carousel img {
+    border-radius: 12px;
+    height: 300px;
+    object-fit: cover;
+}
+
+.modal-content {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+    background-color: #ffffff;
+    color: #333;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 15px;
+}
+
+.modal-header .btn-close {
+    color: #333;
+}
+
+.modal-body {
+    padding: 25px;
+}
+
+#modalNombre {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+}
+
+#modalDescripcion {
+    font-size: 1.2em;
+    color: #6c757d;
+    text-align: center;
+    margin-top: 10px;
+}
+
+#modalPrecio {
+    font-size: 1.5em;
+    color: #28a745;
+    text-align: center;
+    margin-top: 15px;
+}
+
+#ingredientesContainer {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#ingredientesContainer label {
+    font-size: 1.1em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #6c757d;
+}
+
+#ingredientesContainer input {
+    margin-right: 10px;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    transition: background-color 0.3s ease;
+}
+
+#ingredientesContainer input:checked {
+    background-color: #28a745;
+}
+
+#btnAgregarCarrito {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    width: 100%;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+#btnAgregarCarrito:hover {
+    background-color: #0056b3;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+.list-group-item {
+    border: none;
+    padding: 0;
+}
+
+.list-group {
+    padding-left: 0;
+}
+
+ .card-redirect {
+            background: linear-gradient(145deg, #fff, #f0f0f0);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+            text-align: center;
+            max-width: 400px;
+            margin: 60px auto;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card-redirect:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 18px 35px rgba(0,0,0,0.2);
+        }
+
+        .card-redirect h4 {
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            color: #d32f2f;
+        }
+
+        .btn-animado {
+            background: #d32f2f;
+            color: #fff;
+            padding: 0.9rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            border: none;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        .menu-item img {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 10px;
-        }
-        .ingredient-checkbox {
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            border: 2px solid #000;
-            border-radius: 50%;
-            display: inline-block;
+            transition: all 0.3s ease;
             position: relative;
+            overflow: hidden;
         }
-        .ingredient-checkbox:checked {
-            background-color: yellow;
+
+        .btn-animado::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.2);
+            transition: left 0.5s;
         }
-        .menu-category {
-            margin-bottom: 30px;
-            padding: 15px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+        .btn-animado:hover::after {
+            left: 100%;
         }
-        .hover-item:hover {
-            background-color: #f8f9fa;
-            cursor: pointer;
+
+        .btn-animado:hover {
+            background: #b71c1c;
         }
+
     </style>
 </head>
 <body>
@@ -111,8 +313,8 @@ $productos = $productos->fetchAll(PDO::FETCH_ASSOC);
         <div class="banner-container mt-3">
             <div class="owl-carousel">
                 <img src="https://comedera.com/wp-content/uploads/sites/9/2022/12/Desayono-americano-shutterstock_2120331371.jpg" alt="Desayuno Americano">
-                <img src="https://www.pequerecetas.com/wp-content/uploads/2020/10/desayunos-saludables.jpg" alt="Desayuno Saludable">
-                <img src="https://www.hogarmania.com/archivos/202010/desayunos-rapidos-faciles-ric-XxXx80.jpg" alt="Desayuno Rápido">
+                <img src="https://www.dir.cat/blog/wp-content/uploads/2019/07/recetas-desayunos-aguacate-huevo-duro.jpg" alt="Desayuno Saludable">
+                <img src="https://cloudfront-us-east-1.images.arcpublishing.com/elespectador/LHLSNZXVX5F4BOFJCCK5RXACZ4.jpg" alt="Desayuno Rápido">
             </div>
         </div>
         
@@ -136,13 +338,17 @@ $productos = $productos->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
 
-    <div class="mt-5 mb-3 text-center">
-        <a href="Menu.php"><button type="button" class="btn btn-danger">Regresar</button></a>
-    </div>
+   <div class="card-redirect">
+            <h4>¿Terminaste tu pedido?</h4>
+            <button class="btn-animado" onclick="window.location.href='index.php'">
+                Regresar al Inicio
+            </button>
+        </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
     <script>
         // Mostrar detalles del producto en modal
         function mostrarDetallesProducto(nombre, descripcion, precio, imagen, ingredientes) {

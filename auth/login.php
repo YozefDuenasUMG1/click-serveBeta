@@ -34,11 +34,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             // Redirige según el rol
             $redirect = match($usuarioData['rol']) {
-                'admin' => '/new_sitem_pedido/modulos/admin/admin_panel.php',
-                'cocinero' => '/new_sitem_pedido/modulos/cocinero/cocinero_panel.html',
-                'cliente' => '/new_sitem_pedido/modulos/cliente/index.php',
-                'cajero' => '/new_sitem_pedido/modulos/cajero/cajero_panel.html',
-                default => '/new_sitem_pedido/login.html?error=rol_no_valido'
+                'admin' => '/click/modulos/admin/admin_panel.php',
+                'cocinero' => '/click/modulos/cocinero/cocinero_panel.html',
+                'cliente' => '/click/modulos/cliente/index.php',
+                'cajero' => '/click/modulos/cajero/cajero_panel.html',
+                default => '/click/login.html?error=rol_no_valido'
             };
             header("Location: $redirect");
             exit();
