@@ -5,19 +5,20 @@ require_once '../../config.php';
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Click&Serve - Menú</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
     <style>
+        /* Fondo pastel profesional */
         body {
-            background: url("https://img.freepik.com/fotos-premium/fondo-rojo-pinceladas-blancas_851755-102.jpg") no-repeat center center fixed;
-            background-size: cover;
-            background-position: center;
+            background-color: #fdf6f0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
         }
 
         nav.navbar {
@@ -26,198 +27,170 @@ require_once '../../config.php';
         }
 
         nav.navbar .navbar-brand, nav.navbar .nav-link {
-            color: #c62828 !important;
-            font-weight: bold;
+            color: #c85a70 !important;
+            font-weight: 700;
             text-transform: uppercase;
+            letter-spacing: 1.2px;
         }
 
         nav.navbar .nav-link:hover {
-            color: #f44336 !important;
+            color: #e76f88 !important;
         }
 
         .btn-carrito {
-            background-color: #ffebeb;
-            border: 2px solid #ff0000;
+            background-color: #f7d8db;
+            border: 2px solid #e76f88;
             border-radius: 50px;
             padding: 0.5rem 1.2rem;
-            color: #ff0000;
-            font-weight: bold;
+            color: #c85a70;
+            font-weight: 700;
             transition: all 0.4s ease;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
 
         .btn-carrito:hover {
-            background-color: #ff0000;
+            background-color: #e76f88;
             color: white;
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+            box-shadow: 0 0 15px rgba(231, 111, 136, 0.7);
             transform: scale(1.1) rotate(-2deg);
         }
 
         .container-menu {
             padding-top: 80px;
             padding-bottom: 40px;
+            padding-left: 2rem;
+            padding-right: 2rem;
         }
 
         .titulo-menu {
             text-align: center;
             margin: 40px auto;
-            color: #d32f2f;
-            font-weight: bold;
+            color: #c85a70;
+            font-weight: 800;
             text-transform: uppercase;
-            border-bottom: 3px solid #d32f2f;
-            padding-bottom: 10px;
+            border-bottom: 4px solid #e76f88;
+            padding-bottom: 12px;
             max-width: 600px;
-            font-size: 2.2rem;
+            font-size: 2.6rem;
+            letter-spacing: 2px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Grid con espacio amplio y tarjetas */
+        .row.row-cols-1.row-cols-md-2.row-cols-lg-3.g-4 {
+            margin-left: 0;
+            margin-right: 0;
         }
 
         .categoria-card {
-            display: flex;
-            flex-direction: row;
-            transition: all 0.4s ease;
-            border-radius: 20px;
+            background: #fff0f3;
+            border-radius: 25px;
+            box-shadow: 0 10px 25px rgba(231, 111, 136, 0.2);
             overflow: hidden;
-            box-shadow: 0 12px 20px rgba(0,0,0,0.15);
-            background: #ffffff;
-            height: 250px;
-            margin-bottom: 30px;
-            position: relative;
-        }
-
-        .categoria-card::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background-color: transparent;
-            transition: background-color 0.3s ease;
-        }
-
-        .categoria-card:hover::after {
-            background-color: rgba(255, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            aspect-ratio: 1 / 1;
+            min-height: 370px;
+            height: 100%;
+            border: 2px solid transparent;
         }
 
         .categoria-card:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 16px 30px rgba(0,0,0,0.2);
+            transform: translateY(-10px) scale(1.07);
+            box-shadow: 0 25px 45px rgba(231, 111, 136, 0.4);
+            border-color: #e76f88;
+            background: #ffe9f0;
         }
 
         .categoria-card a {
-            text-decoration: none;
             color: inherit;
-            display: flex;
-            width: 100%;
+            text-decoration: none;
             height: 100%;
+            display: flex;
+            flex-direction: column;
         }
 
         .categoria-img {
-            width: 40%;
-            height: 100%;
+            width: 100%;
+            height: 60%;
             object-fit: cover;
+            border-top-left-radius: 25px;
+            border-top-right-radius: 25px;
+            flex-shrink: 0;
+            filter: drop-shadow(0 3px 3px rgba(231, 111, 136, 0.15));
+            transition: filter 0.3s ease;
+        }
+
+        .categoria-card:hover .categoria-img {
+            filter: drop-shadow(0 6px 10px rgba(231, 111, 136, 0.35));
         }
 
         .categoria-body {
-            padding: 25px;
+            padding: 25px 20px;
+            flex-grow: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            width: 60%;
+            text-align: center;
         }
 
         .categoria-title {
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-            color: #d32f2f;
-            font-weight: bold;
+            font-size: 2.1rem;
+            color: #c85a70;
+            font-weight: 900;
+            margin-bottom: 0.3rem;
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: 1.5px;
+            text-shadow: 1px 1px 1px #f9cdd0;
         }
 
         .categoria-subtitle {
-            font-weight: 600;
-            color: #444;
-            margin-bottom: 10px;
+            font-weight: 700;
+            color: #a56a7b;
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+            font-style: italic;
+            letter-spacing: 0.5px;
         }
 
         .categoria-desc {
-            color: #555;
-            font-size: 1rem;
+            color: #8b6a74;
+            font-size: 1.05rem;
+            line-height: 1.4;
+            padding: 0 10px;
         }
 
-        .card-redirect {
-            background: linear-gradient(145deg, #fff, #f0f0f0);
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
-            text-align: center;
-            max-width: 400px;
-            margin: 60px auto;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        /* Botón regresar */
+        .text-center.mt-5 {
+            margin-top: 3rem !important;
         }
 
-        .card-redirect:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 18px 35px rgba(0,0,0,0.2);
-        }
-
-        .card-redirect h4 {
-            font-weight: bold;
-            margin-bottom: 1.5rem;
-            color: #d32f2f;
-        }
-
-        .btn-animado {
-            background: #d32f2f;
-            color: #fff;
-            padding: 0.9rem 2rem;
-            font-size: 1.1rem;
+        .btn-danger.btn-lg {
             border-radius: 50px;
+            padding: 0.9rem 3rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            background-color: #c85a70;
             border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 8px 15px rgba(200, 90, 112, 0.4);
         }
 
-        .btn-animado::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: rgba(255,255,255,0.2);
-            transition: left 0.5s;
+        .btn-danger.btn-lg:hover {
+            background-color: #e76f88;
+            box-shadow: 0 12px 25px rgba(231, 111, 136, 0.6);
         }
 
-        .btn-animado:hover::after {
-            left: 100%;
-        }
-
-        .btn-animado:hover {
-            background: #b71c1c;
-        }
-
+        /* Responsive */
         @media (max-width: 768px) {
-            .categoria-card {
-                flex-direction: column;
-                height: auto;
-            }
-
-            .categoria-img {
-                width: 100%;
-                height: 200px;
-            }
-
-            .categoria-body {
-                width: 100%;
-            }
-
-            .categoria-title {
-                font-size: 1.5rem;
-            }
-
             .titulo-menu {
-                font-size: 1.8rem;
+                font-size: 2rem;
+            }
+
+            .categoria-card {
+                min-height: 320px;
             }
         }
     </style>
@@ -228,7 +201,7 @@ require_once '../../config.php';
     <div class="container container-menu">
         <h1 class="titulo-menu">Menú de la Casa</h1>
 
-        <div class="row">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
             <?php
             $categorias = [
                 ["Desayunos", "https://comedera.com/wp-content/uploads/sites/9/2022/12/Desayono-americano-shutterstock_2120331371.jpg", "Lo mejor de la Casa", "Empieza tu día con nuestros deliciosos desayunos.", "Desayunos.php"],
@@ -240,10 +213,10 @@ require_once '../../config.php';
             ];
 
             foreach ($categorias as $cat) {
-                echo "<div class='col-md-6 col-lg-4'>
+                echo "<div class='col'>
                     <div class='categoria-card'>
                         <a href='{$cat[4]}'>
-                            <img src='{$cat[1]}' class='categoria-img' alt='{$cat[0]}'>
+                            <img src='{$cat[1]}' alt='{$cat[0]}' class='categoria-img' />
                             <div class='categoria-body'>
                                 <h3 class='categoria-title'>{$cat[0]}</h3>
                                 <div class='categoria-subtitle'>{$cat[2]}</div>

@@ -56,7 +56,7 @@ $_SESSION['nombre_usuario'] = 'Cajero'; // Temporal
   <!-- Panel de cajero -->
   <div class="container cajero-panel">
     <h1>Panel de Cajero</h1>
-    <a href="../../dashboard/analytics/stadistics.html" class="btn btn-primary">Ver Estadísticas</a>
+    <a href="../../dashboard/analytics/dashboard.html" class="btn btn-primary">Ver Estadísticas</a>
     <a href="/click-serveBeta-main/facturacion/index.php" class="btn btn-success">Facturación</a>
   </div>
 

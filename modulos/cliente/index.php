@@ -308,6 +308,44 @@ $productos = $productos->fetchAll(PDO::FETCH_ASSOC);
     font-size: 1.1rem;
   }
 }
+.creative-title {
+  font-size: 3rem;
+  font-family: 'Poppins', 'Segoe UI', sans-serif;
+  font-weight: 900;
+  background: linear-gradient(90deg, #c85a70 20%, #eab308 60%, #ffb6b9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+  letter-spacing: 3px;
+  text-shadow: 2px 4px 18px #ffe4e1, 0 2px 8px #c85a70;
+  animation: pop-in 1.2s cubic-bezier(.68,-0.55,.27,1.55);
+  margin-bottom: 20px;
+  display: inline-block;
+}
+
+.creative-title .amp {
+  color: #fff;
+  background: #c85a70;
+  border-radius: 50%;
+  padding: 0 12px;
+  margin: 0 8px;
+  font-size: 2.2rem;
+  box-shadow: 0 2px 12px #c85a7040;
+  vertical-align: middle;
+  font-weight: 800;
+  animation: bounce 1.5s infinite alternate;
+}
+
+@keyframes pop-in {
+  0% { transform: scale(0.7) translateY(40px); opacity: 0; }
+  80% { transform: scale(1.1) translateY(-8px); opacity: 1; }
+  100% { transform: scale(1) translateY(0); }
+}
+@keyframes bounce {
+  0% { transform: translateY(0);}
+  100% { transform: translateY(-8px);}
+}
 
 
 
@@ -414,7 +452,6 @@ $productos = $productos->fetchAll(PDO::FETCH_ASSOC);
     </div>
     <br>
 
-  <!-- Sección de fade -->
 <section class="fade-section">
   <section class="gift-card">
     <div class="gift-card__content">
@@ -422,12 +459,11 @@ $productos = $productos->fetchAll(PDO::FETCH_ASSOC);
         <img style="width: 300px;" src="click&serveimg.png" alt="Bebida refrescante" />
       </div>
       <div class="gift-card__text">
-        <h2>CLICK&SERVE</h2>
-       <p style="font-size: 22px; color: #333; line-height: 1.6; max-width: 800px; margin: 20px auto; text-align: center;">
-  <span style="font-weight: bold; color: #eab308;">Click&Serve</span> optimiza la experiencia gastronómica al permitir que los clientes realicen sus pedidos directamente desde la mesa, reduciendo la necesidad de personal adicional y agilizando el servicio.
-</p>
-
-     </div>
+        <h2 class="creative-title">CLICK<span class="amp">&</span>SERVE</h2>
+        <p style="font-size: 22px; color: #333; line-height: 1.6; max-width: 800px; margin: 20px auto; text-align: center;">
+          <span style="font-weight: bold; color: #eab308;">Click&Serve</span> optimiza la experiencia gastronómica al permitir que los clientes realicen sus pedidos directamente desde la mesa, reduciendo la necesidad de personal adicional y agilizando el servicio.
+        </p>
+      </div>
     </div>
   </section>
 </section>

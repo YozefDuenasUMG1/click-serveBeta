@@ -1,122 +1,103 @@
-<?php
-session_start();
-$_SESSION['nombre_usuario'] = 'Cocinero'; // Temporal
-?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Panel de Cocinero</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Redirección a Cocina</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      padding-top: 70px;
-      background: linear-gradient(to right, #f8f9fa, #e9ecef);
-      font-family: 'Segoe UI', sans-serif;
-    }
-
-    .cocinero-panel {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 40px 0;
-      position: relative;
-      height: 650px;
-    }
-
-    .row-custom {
-      position: relative;
-      width: 100%;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
       display: flex;
       justify-content: center;
-      gap: 40px;
-    }
-
-    .row-custom.top {
-      margin-bottom: 20px;
-      margin-top: -40px;
-    }
-
-    .row-custom.bottom {
-      margin-left: 100px;
-      margin-top: 60px;
+      align-items: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #e0eafc, #cfdef3);
     }
 
     .card {
-      border: none;
-      border-radius: 16px;
-      transition: all 0.3s ease;
-      background: #ffffff;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      overflow: hidden;
-      position: relative;
-      width: 320px;
-      height: 280px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 1.5rem;
+      padding: 3rem;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
+      transform: translateY(-6px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
     }
 
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 6px;
-      width: 100%;
-      background: linear-gradient(to right, #0d6efd, #6610f2);
-      transition: all 0.3s ease;
-      opacity: 0;
-    }
-
-    .card:hover::before {
-      opacity: 1;
-    }
-
-    .card-body {
-      padding: 30px;
-      text-align: center;
-    }
-
-    .card-title {
-      font-size: 1.5rem;
-      margin-bottom: 25px;
-      color: #343a40;
+    .card h2 {
+      color: #222;
+      font-size: 1.9rem;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
     }
 
     .btn {
-      border-radius: 8px;
-      font-weight: 600;
-      padding: 12px 24px;
-      font-size: 1rem;
-      transition: background-color 0.3s ease;
+      padding: 0.9rem 2.4rem;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: white;
+      background: linear-gradient(to right, #4facfe, #00f2fe);
+      border: none;
+      border-radius: 0.75rem;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
     }
 
-    .btn-primary:hover {
-      background-color: #0b5ed7;
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 18px rgba(0, 123, 255, 0.4);
+    }
+
+    .btn:disabled {
+      background: #999;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    .loading {
+      margin-top: 1.5rem;
+      font-size: 1rem;
+      color: #333;
+      display: none;
     }
   </style>
 </head>
 <body>
 
-  <?php include '../admin/navbar_admin.php'; ?>
-
-  <div class="cocinero-panel">
-    <div class="row-custom top">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Gestión de Pedidos</h5>
-          <a href="../../cocina.html" class="btn btn-primary">Ir a Cocina</a>
-        </div>
-      </div>
-    </div>
+  <div class="card">
+    <h2>Ir a la Vista de Cocina</h2>
+    <button class="btn" id="btnIr">Ir a Cocina</button>
+    <div class="loading" id="loadingText">Redirigiendo...</div>
   </div>
+
+  <script>
+    const btn = document.getElementById('btnIr');
+    const loadingText = document.getElementById('loadingText');
+
+    btn.addEventListener('click', () => {
+      btn.disabled = true;
+      loadingText.style.display = 'block';
+
+      setTimeout(() => {
+        window.location.href = '../../cocina.html';
+      }, 1200);
+    });
+  </script>
 
 </body>
 </html>
